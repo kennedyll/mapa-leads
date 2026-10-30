@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mapa Leads</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header><h1>Mapa Leads</h1><p>Encontre empresas no Google Maps por nicho e cidade.</p></header>
+
+  <main>
+    <form id="form" autocomplete="off">
+      <label>O que buscar
+        <input id="termo" required minlength="2" placeholder="ex.: dentistas">
+      </label>
+      <label>Cidade
+        <input id="cidade" required minlength="2" placeholder="ex.: Campinas, SP">
+      </label>
+      <label>Quantidade
+        <select id="prof">
+          <option value="3">Pequena (teste rápido)</option>
+          <option value="5" selected>Média</option>
+          <option value="10">Grande (mais lenta)</option>
+        </select>
+      </label>
+      <button id="buscar" type="submit">Buscar empresas</button>
+    </form>
+
+    <p id="msg" role="status"></p>
+
+    <section id="resultado" hidden>
+      <div class="barra">
+        <strong id="contagem"></strong>
+        <input id="filtro" placeholder="Filtrar na lista…">
+      </div>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Empresa</th><th>Categoria</th><th>Telefone</th><th>Site</th><th>E-mail</th><th>Nota</th><th>Endereço</th></tr></thead>
+          <tbody id="linhas"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

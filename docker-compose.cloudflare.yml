@@ -1,0 +1,17 @@
+# EXTRA para colocar o sistema online com Cloudflare Tunnel (sem abrir portas no servidor).
+# O container 'cloudflared' liga PARA FORA na Cloudflare, e a Cloudflare encaminha as visitas
+# para http://app:8000 dentro da rede privada do Docker.
+#
+# Subir:   docker compose -f docker-compose.yml -f docker-compose.cloudflare.yml up -d --build
+# Parar:   docker compose -f docker-compose.yml -f docker-compose.cloudflare.yml down
+#
+# Precisa de  TUNNEL_TOKEN=...  no arquivo .env (veja docs/publicar.md).
+# !! O sistema AINDA NÃO TEM LOGIN. Proteja o endereço com Cloudflare Access ANTES de compartilhar.
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN:?coloque TUNNEL_TOKEN=... no arquivo .env}
+    depends_on:
+      - app

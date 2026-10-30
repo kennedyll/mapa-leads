@@ -1,0 +1,23 @@
+# Dois containers: 'scraper' (lê o Google Maps) e 'app' (nosso sistema).
+# Só o 'app' fica acessível, e apenas neste computador (127.0.0.1:8000).
+services:
+  scraper:
+    image: gosom/google-maps-scraper:v1.18.1
+    command: ["-web", "-data-folder", "/gmapsdata"]
+    volumes:
+      - scraper-data:/gmapsdata
+    restart: unless-stopped
+    shm_size: 1gb
+
+  app:
+    build: .
+    environment:
+      SCRAPER_URL: http://scraper:8080
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      - scraper
+    restart: unless-stopped
+
+volumes:
+  scraper-data:
